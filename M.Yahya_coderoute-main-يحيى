@@ -1,0 +1,91 @@
+import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:flutter/services.dart';
+
+void main() => runApp(YahyaCodeRouteApp());
+
+class YahyaCodeRouteApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Yahya CodeRoute',
+      theme: ThemeData(
+        primaryColor: Colors.red,
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+          primary: Colors.red,
+          secondary: Colors.black,
+        ),
+      ),
+      home: SplashScreen(),
+    );
+  }
+}
+
+class SplashScreen extends StatefulWidget {
+  @override
+  _SplashScreenState createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration(seconds: 3), () {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (_) => HomeScreen()));
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Center(
+        child: Image.asset("assets/images/road_sign.png", width: 150),
+      ),
+    );
+  }
+}
+
+// نموذج بيانات المخالفة
+class Violation {
+  final String code;
+  final String category;
+  final int degree;
+  final String title;
+  final String fine;
+  final int points;
+  final String licenseSuspension;
+  final String prison;
+  final String procedure;
+
+  Violation({
+    required this.code,
+    required this.category,
+    required this.degree,
+    required this.title,
+    required this.fine,
+    required this.points,
+    required this.licenseSuspension,
+    required this.prison,
+    required this.procedure,
+  });
+
+  factory Violation.fromJson(Map<String, dynamic> json) {
+    return Violation(
+      code: json['code'],
+      category: json['category'],
+      degree: json['degree'],
+      title: json['title'],
+      fine: json['fine'],
+      points: json['points'],
+      licenseSuspension: json['license_suspension'],
+      prison: json['prison'],
+      procedure: json['procedure'],
+    );
+  }
+}
+
+// شاشة رئيسية
+class HomeScreen extends
